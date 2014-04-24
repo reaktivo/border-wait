@@ -46,3 +46,8 @@ Un módulo Nodejs para obtener el tiempo de espera de las garitas de Estados Uni
 		    port: 'san_ysidro' } ]
 				*/
 		})
+
+
+## Licencia
+BSD-2-Clause
+
