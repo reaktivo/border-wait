@@ -1,0 +1,42 @@
+{
+  "name": "border-wait",
+  "version": "0.0.2",
+  "description": "Border Wait Time Scraper",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "make",
+		"prepublish": "make",
+		"posttest": "make clean",
+		"postpublish": "make clean",
+		"test": "mocha --compilers coffee:coffee-script/register --reporter spec"
+  },
+  "author": "Marcel Miranda",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "cheerio": "~0.15.0",
+    "request": "~2.34.0",
+    "underscore": "~1.6.0",
+    "colors": "~0.6.2",
+    "q": "~1.0.1"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.7.1",
+    "mocha": "~1.18.2",
+    "difflet": "~0.2.6"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:reaktivo/border-wait.git"
+  },
+  "keywords": [
+    "border",
+    "wait",
+    "scraper"
+  ],
+  "bugs": {
+    "url": "https://github.com/reaktivo/border-wait/issues"
+  }
+}
