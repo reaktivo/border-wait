@@ -47,6 +47,28 @@ Un módulo Nodejs para obtener el tiempo de espera de las garitas de Estados Uni
         */
     })
 
+También puedes escribir tu código con Promises
+
+    wait('san_ysidro').done(function(reports) {
+      console.log(reports);
+    })
+
+
+El objeto Promise es extendido con los siguientes métodos de `underscore`:
+`each map where find findWhere pluck sortBy groupBy indexBy`. Por lo que puedes
+hacer lo siguiente:
+
+    var border = require('border-wait');
+    var query = {port: 'san_ysidro', lane: 'sentri'}
+    border('san_ysidro').findWhere(query, function(result) {
+      /* result ==
+        { lane: 'sentri',
+          delay: 15,
+          type: 'vehicular',
+          port: 'san_ysidro' }
+      */
+    })
+
 
 ## Licencia
 BSD-2-Clause

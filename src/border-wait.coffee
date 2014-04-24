@@ -1,10 +1,12 @@
 request = require 'request'
 Q = require 'q'
 _ = require 'underscore'
-{ each, toArray } = _
+{ each, toArray, last } = _
 
 parser = require './parser'
 ports = require './ports'
+
+methods = 'each map where find findWhere pluck sortBy groupBy indexBy'.split(' ')
 
 class BorderWait
 
@@ -32,7 +34,7 @@ class BorderWait
         @reports = @extract body, port
         deferred.resolve @reports
         done null, @reports if done
-    deferred.promise
+    extendedPromise deferred.promise
 
   extract: (body, port) ->
     reports = parser(body).reports
@@ -43,8 +45,20 @@ class BorderWait
     else
       reports
 
-'each map where find findWhere pluck sortBy groupBy indexBy'.split(' ').forEach (fn) ->
+methods.forEach (fn) ->
   BorderWait.prototype[fn] = ->
     _[fn].apply null, [@reports].concat toArray(arguments)
+
+extendedPromise = (promise) ->
+  methods.forEach (fn) ->
+    promise[fn] = ->
+      args = toArray(arguments)
+      _args = args.slice 0, -1
+      callback = last args
+      promise.done (reports) ->
+        callback _[fn].apply null, [reports].concat _args
+  promise
+
+
 
 module.exports = (port, done) -> new BorderWait(port, done)
