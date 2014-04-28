@@ -31,7 +31,7 @@ describe 'Border Wait', ->
   it 'should get border wait times, via Promise', (done) ->
     border().load('san_ysidro')
       .fail (err) -> done(err)
-      .done (reports) ->
+      .then (reports) ->
         diff = difflet.compare(reports, expected)
         message = "Report not equal to expected\n#{diff}"
         assert.deepEqual reports, expected, message
