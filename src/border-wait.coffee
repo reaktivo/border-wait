@@ -55,7 +55,7 @@ extendedPromise = (promise) ->
       args = toArray(arguments)
       _args = args.slice 0, -1
       callback = last args
-      promise.done (reports) ->
+      promise.then (reports) ->
         callback _[fn].apply null, [reports].concat _args
   promise
 
