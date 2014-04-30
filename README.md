@@ -19,37 +19,20 @@ Un módulo Nodejs para obtener el tiempo de espera de las garitas de Estados Uni
 
 ## Para usar
 
-    var wait = require('border-wait');
+    var border = require('border-wait');
 
-    wait('san_ysidro', function(err, reports) {
+    border(function(err, reports) {
       console.log(reports);
       /*
-      [ { lane: 'standard',
-        delay: 120,
-        type: 'vehicular',
-        port: 'san_ysidro' },
-      { lane: 'sentri',
-        delay: 15,
-        type: 'vehicular',
-        port: 'san_ysidro' },
-      { lane: 'readylane',
-        delay: 70,
-        type: 'vehicular',
-        port: 'san_ysidro' },
-      { lane: 'standard',
-        delay: 70,
-        type: 'pedestrian',
-        port: 'san_ysidro' },
-      { lane: 'readylane',
-        delay: 40,
-        type: 'pedestrian',
-        port: 'san_ysidro' } ]
-        */
-    })
+        Reports es una Array de objetos de los puertos de
+        entrada a Estados Unidos.
+      */
+    });
 
 También puedes escribir tu código con Promises
 
-    wait('san_ysidro').done(function(reports) {
+    var border = require('border-wait');
+    border.ports().done(function(reports) {
       console.log(reports);
     })
 
@@ -60,14 +43,14 @@ hacer lo siguiente:
 
     var border = require('border-wait');
     var query = {port: 'san_ysidro', lane: 'sentri'}
-    border('san_ysidro').findWhere(query, function(result) {
+    border.findWhere(query).then function(report){
       /* result ==
         { lane: 'sentri',
           delay: 15,
           type: 'vehicular',
           port: 'san_ysidro' }
       */
-    })
+    }
 
 
 ## Licencia
