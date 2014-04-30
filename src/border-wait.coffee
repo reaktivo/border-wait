@@ -4,61 +4,31 @@ _ = require 'underscore'
 { each, toArray, last } = _
 
 parser = require './parser'
-ports = require './ports'
+endpoint = 'http://apps.cbp.gov/bwt/bwt.xml'
 
-methods = 'each map where find findWhere pluck sortBy groupBy indexBy'.split(' ')
 
 class BorderWait
 
   parser: parser
-  ports: ports
-  reports: []
+  endpoint: endpoint
 
-  constructor: (port, done) ->
-    return if port and done is undefined
-      @load port
-    else if done
-      @load port, done
+  _load: (done) ->
+    request endpoint, (err, res, html) -> done(err, html)
 
+  load: =>
+    def = Q.defer()
+    @_load def.makeNodeResolver()
+    def.promise
 
-  _load: (port, done) ->
-    request ports[port], (err, res, body) => done(err, body)
+  ports: (done) =>
+    @load().then(parser.extract).nodeify(done)
 
-  load: (port, done) ->
-    deferred = Q.defer()
-    @_load port, (err, body) =>
-      if err
-        deferred.reject new Error err
-        done err if done
-      else
-        @reports = @extract body, port
-        deferred.resolve @reports
-        done null, @reports if done
-    extendedPromise deferred.promise
+methods = 'each map where find findWhere pluck sortBy groupBy indexBy'.split(' ')
+each methods, (meth) ->
+  BorderWait.prototype[meth] = ->
+    args = toArray arguments
+    fn = (reports) ->
+      _[meth].apply undefined, [reports].concat(args)
+    @ports().then(fn)
 
-  extract: (body, port) ->
-    reports = parser(body).reports
-    if port
-      for report in reports
-        report.port = port
-        report
-    else
-      reports
-
-methods.forEach (fn) ->
-  BorderWait.prototype[fn] = ->
-    _[fn].apply null, [@reports].concat toArray(arguments)
-
-extendedPromise = (promise) ->
-  methods.forEach (fn) ->
-    promise[fn] = ->
-      args = toArray(arguments)
-      _args = args.slice 0, -1
-      callback = last args
-      promise.then (reports) ->
-        callback _[fn].apply null, [reports].concat _args
-  promise
-
-
-
-module.exports = (port, done) -> new BorderWait(port, done)
+module.exports = BorderWait

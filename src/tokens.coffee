@@ -1,10 +1,12 @@
 # Constants
 module.exports =
   type:
-    vehicular: /Passenger Vehicles .+?: (.+?) Pedestrian/i
-    pedestrian: /Pedestrian .+?: (.+)$/i
+    passenger: 'passenger_vehicle_lanes'
+    pedestrian: 'pedestrian_lanes'
+    commercial: 'commercial_vehicle_lanes'
   lane:
-    standard: /Standard Lanes: (.+? open)/i
-    sentri: /Sentri Lanes: (.+? open)/i
-    readylane: /Readylane: (.+? open)/i
-  delay: /(?:PDT|EST|PST)(?: (no delay)| ([0-9]+) hrs?,?)?(?: ([0-9]+) min)?.*open/i
+    standard: 'standard_lanes'
+    sentri: 'ready_lanes'
+    readylane: 'NEXUS_SENTRI_lanes'
+    fast: 'FAST_lanes'
+  delay: /(\d+ hrs?)?\s?(\d+(?: min)?)?/i

@@ -1,11 +1,11 @@
 {
   "name": "border-wait",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Border Wait Time Scraper",
   "main": "index.js",
   "scripts": {
     "pretest": "make",
-    "prepublish": "make",
+    "prepublish": "make && false",
     "posttest": "make clean",
     "postpublish": "make clean",
     "test": "mocha --compilers coffee:coffee-script/register --reporter spec"

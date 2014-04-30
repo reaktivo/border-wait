@@ -1,42 +1,53 @@
 cheerio = require 'cheerio'
-{ map, compact, flatten } = require 'underscore'
+{ map, compact, flatten, extend } = require 'underscore'
 tokens = require './tokens'
 
 toInt = (number) -> parseInt(number || 0, 10)
+contains = (str, needle) -> str.indexOf(needle) isnt -1;
+$ = null
 
 class BorderWaitParser
 
-  reports: []
   tokens: tokens
 
-  constructor: (text) ->
-    @extract text if text
+  extract: (html) =>
+    $ = cheerio.load html
+    compact flatten map $('port'), @port
 
-  extract: (text) ->
-    $ = cheerio.load text
-    text = $('item description').text()
-    @reports = flatten map tokens.type, (token, type) =>
-      typeText = token.exec(text)?[1]
-      for lane in @lanes typeText
-        lane.type = type
-        lane
-    @reports
+  port: (port) =>
+    $port = $ port
+    report = @report $port
+    return if report.status is 'closed'
+    map tokens.type, (typeSel, type) =>
+      map tokens.lane, (laneSel, lane) =>
+        $lane = $("#{typeSel} #{laneSel}", port)
+        @lane $lane, extend {lane, type}, report
 
-  lanes: (text) ->
-    compact map tokens.lane, (token, lane) =>
-      matches = token.exec text
-      if matches?.length
-        delay = @delay matches[1]
-        { lane, delay }
+  lane: ($lane, report) =>
+    return unless $lane.length
+    status = $('operational_status', $lane).text()
+    return unless contains status, 'delay'
+    delay = @delay $('delay_minutes', $lane).text()
+    return if delay is null
+    updated_at = @time report.updated_at, $('update_time', $lane).text()
+    return if updated_at is null
+    extend {}, report, {updated_at, delay}
 
-  delay: (text) ->
-    return if text.indexOf("Update Pending") isnt -1
-    text = text.replace 'no delay', '0 min'
-    lane_info = tokens.delay.exec(text)
-    if lane_info?.length
-      hours = toInt lane_info[2]
-      minutes = toInt lane_info[3]
+  report: ($port) =>
+    id: $('port_number', $port).text()
+    port: $('port_name', $port).text()
+    status: $('port_status', $port).text().toLowerCase()
+    updated_at: $('date', $port).text()
+
+  delay: (text) =>
+    delay = tokens.delay.exec(text)
+    if delay
+      hours = toInt delay[1]
+      minutes = toInt delay[2]
       hours * 60 + minutes
+    else
+      null
 
-module.exports = (text) ->
-  new BorderWaitParser text
+  time: (date, time) => date + " " + time
+
+module.exports = new BorderWaitParser
