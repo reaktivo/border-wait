@@ -1,6 +1,7 @@
 cheerio = require 'cheerio'
 { map, compact, flatten, extend } = require 'underscore'
 tokens = require './tokens'
+moment = require 'moment'
 
 toInt = (number) -> parseInt(number || 0, 10)
 contains = (str, needle) -> str.indexOf(needle) isnt -1;
@@ -48,6 +49,9 @@ class BorderWaitParser
     else
       null
 
-  time: (date, time) => date + " " + time
+  time: (date, time) =>
+    timestr = date + time
+    format = 'MM/DD/YYYY[At] hh:mm a zz'
+    moment(timestr, format).unix()
 
 module.exports = new BorderWaitParser

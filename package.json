@@ -16,7 +16,8 @@
     "request": "~2.34.0",
     "underscore": "~1.6.0",
     "colors": "~0.6.2",
-    "q": "~1.0.1"
+    "q": "~1.0.1",
+    "moment": "~2.6.0"
   },
   "devDependencies": {
     "coffee-script": "~1.7.1",

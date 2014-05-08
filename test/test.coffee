@@ -13,6 +13,7 @@ BorderWait.prototype._load = (done) ->
 keys = "lane type id port status updated_at delay".split(" ")
 
 border = new BorderWait()
+query = {port: 'San Ysidro', type: 'passenger', lane: 'sentri'}
 
 describe 'Border Wait', ->
 
@@ -27,9 +28,15 @@ describe 'Border Wait', ->
       done()
 
   it 'should find San Ysidro Passenger Sentri lane', (done) ->
-    query = {port: 'San Ysidro', type: 'passenger', lane: 'sentri'}
     border.findWhere(query)
       .then (report) ->
         assert report.delay is 45, 'Report delay incorrect'
+        done()
+      .fail (err) -> done(err)
+
+  it 'should parse dates as unix timestamp', (done) ->
+    border.findWhere(query)
+      .then (report) ->
+        assert report.updated_at is 1398726000, 'Incorrect value for updated_at'
         done()
       .fail (err) -> done(err)
