@@ -50,8 +50,14 @@ class BorderWaitParser
       null
 
   time: (date, time) =>
+    time = time
+      .replace /PST/, '-0800'
+      .replace /PDT|MST/, '-0700'
+      .replace /CST|MDT/, '-0600'
+      .replace /CDT|EST/, '-0500'
+      .replace /EDT/, '-0400'
     timestr = date + time
-    format = 'MM/DD/YYYY[At] hh:mm a zz'
+    format = 'MM/DD/YYYY[At] hh:mm a ZZ'
     moment(timestr, format).unix()
 
 module.exports = new BorderWaitParser
