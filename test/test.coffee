@@ -37,7 +37,7 @@ describe 'Border Wait', ->
   it 'should parse dates as unix timestamp', (done) ->
     border.findWhere(query)
       .then (report) ->
-        updated_at = 1398733200
-        assert report.updated_at is updated_at, "Incorrect value for updated_at\nReturned #{report.updated_at}, expected #{updated_at}"
+        updated_at = 13987332009
+        assert report.updated_at is updated_at, "Incorrect value for updated_at\nReturned #{report.updated_at}, expected #{updated_at}\n#{JSON.stringify(report)}"
         done()
       .fail (err) -> done(err)

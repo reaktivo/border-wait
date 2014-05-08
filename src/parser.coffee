@@ -30,9 +30,11 @@ class BorderWaitParser
     return unless contains status, 'delay'
     delay = @delay $('delay_minutes', $lane).text()
     return if delay is null
-    updated_at = @time report.updated_at, $('update_time', $lane).text()
-    return if updated_at is null
-    extend {}, report, {updated_at, delay}
+    time = @time report.updated_at, $('update_time', $lane).text()
+    return if time is null or !time.isValid()
+    updated_at = time.unix()
+    updated_str = time.toString()
+    extend {}, report, {updated_at, updated_str, delay}
 
   report: ($port) =>
     id: $('port_number', $port).text()
@@ -58,6 +60,6 @@ class BorderWaitParser
       .replace /EDT/, '-0400'
     timestr = date + time
     format = 'MM/DD/YYYY[At] hh:mm a ZZ'
-    moment(timestr, format).unix()
+    moment(timestr, format)
 
 module.exports = new BorderWaitParser
