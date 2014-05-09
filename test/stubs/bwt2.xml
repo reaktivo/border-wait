@@ -4172,36 +4172,36 @@
         <passenger_vehicle_lanes>
             <maximum_lanes>24</maximum_lanes>
             <standard_lanes>
-                <update_time>At 6:00 pm PDT</update_time>
+                <update_time>At 7:00 pm PDT</update_time>
                 <operational_status>delay</operational_status>
-                <delay_minutes>1 hr</delay_minutes>
+                <delay_minutes>1 hr 30 min</delay_minutes>
                 <lanes_open>7</lanes_open>
             </standard_lanes>
             <NEXUS_SENTRI_lanes>
-                <update_time>At 6:00 pm PDT</update_time>
+                <update_time>At 7:00 pm PDT</update_time>
                 <operational_status>delay</operational_status>
-                <delay_minutes>15 min</delay_minutes>
+                <delay_minutes>20 min</delay_minutes>
                 <lanes_open>7</lanes_open>
             </NEXUS_SENTRI_lanes>
             <ready_lanes>
-                <update_time>At 6:00 pm PDT</update_time>
+                <update_time>At 7:00 pm PDT</update_time>
                 <operational_status>delay</operational_status>
-                <delay_minutes>45 min</delay_minutes>
+                <delay_minutes>1 hr</delay_minutes>
                 <lanes_open>3</lanes_open>
             </ready_lanes>
         </passenger_vehicle_lanes>
         <pedestrian_lanes>
             <maximum_lanes>15</maximum_lanes>
             <standard_lanes>
-                <update_time>At 6:00 pm PDT</update_time>
+                <update_time>At 7:00 pm PDT</update_time>
                 <operational_status>delay</operational_status>
-                <delay_minutes>15 min</delay_minutes>
+                <delay_minutes>20 min</delay_minutes>
                 <lanes_open>11</lanes_open>
             </standard_lanes>
             <ready_lanes>
-                <update_time>At 6:00 pm PDT</update_time>
+                <update_time>At 7:00 pm PDT</update_time>
                 <operational_status>no delay</operational_status>
-                <delay_minutes>5</delay_minutes>
+                <delay_minutes>10</delay_minutes>
                 <lanes_open>4</lanes_open>
             </ready_lanes>
         </pedestrian_lanes>
