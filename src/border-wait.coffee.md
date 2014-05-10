@@ -33,8 +33,8 @@ call this function directly.
 
 `@ports` can be used both in a Promise or callback style.
 
-```
-border = new BorderWait()
+```javascript
+var border = new BorderWait()
 border.ports(function(err, reports) {
   // handle reports or err
 });
@@ -53,8 +53,8 @@ border.ports().then(function(reports) {
 We extend our class with some underscore methods that works as shorthand
 to manipulate the reports array, take the following as an example:
 
-```
-border = new BorderWait()
+```javascript
+var border = new BorderWait()
 border.findWhere({port: 'San Ysidro'}).then(function(reports) {
   // Reports will consist only of reports where port equals 'San Ysidro'
 })
