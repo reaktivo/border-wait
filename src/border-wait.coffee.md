@@ -19,6 +19,9 @@ any way you like. Promises are based on [Q module](https://github.com/kriskowal/
 
       parser: parser
       endpoint: endpoint
+      typeOrder: ['passenger', 'pedestrian', 'commercial']
+      laneOrder: ['standard', 'readylane', 'sentri', 'fast']
+
 
       _load: (done) ->
         request endpoint, (err, res, html) -> done(err, html)
@@ -48,7 +51,19 @@ border.ports().then(function(reports) {
 ```
 
       ports: (done) =>
-        @load().then(parser.extract).nodeify(done)
+        @load().then(parser.extract).then(@sort).nodeify(done)
+
+`@sort` is used to sort the array of reports based on most
+common usage.
+
+      sort: (reports) =>
+        reports.sort (a, b) =>
+          indexA = @typeOrder.indexOf(a.type) * -1
+          indexB = @typeOrder.indexOf(b.type) * -1
+          if indexA is indexB
+            indexA = @laneOrder.indexOf(a.lane) * -1
+            indexB = @laneOrder.indexOf(b.lane) * -1
+          indexB - indexA
 
 We extend our class with some underscore methods that works as shorthand
 to manipulate the reports array, take the following as an example:
