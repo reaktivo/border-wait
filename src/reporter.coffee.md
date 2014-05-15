@@ -32,7 +32,9 @@ We create the BorderWaitReporter class which extends EventEmmiter
 The constructor creates an instance of BorderWait scraper and
 setups it's interval for updates.
 
-      constructor: (@interval = defaultInterval) ->
+      constructor: (opts) ->
+        @interval = opts.interval or 2 * 60 * 1000
+        @ignoreFirst = opts.ignoreFirst or no
         @border = new BorderWait()
 
 We then overwrite EventEmitter's `@on` and `@off` methods and use them
@@ -54,7 +56,7 @@ extracting new reports and `emit`ing events with report data.
         @border.ports().then @handle
 
       handle: (reports) =>
-        if @reports
+        if @reports and @ignoreFirst
           newReports = @extractNew(reports, @reports)
           each newReports, (report) => @emit 'report', report
           @emit 'reports', newReports
@@ -76,6 +78,8 @@ but they are mostly used by the `on` and `off` methods.
 and returns only an array containing differences.
 
       extractNew: (newSet, oldSet) ->
+        if oldSet is undefined or oldSet.length is 0
+          return newSet
         reject newSet, (report) ->
           findWhere oldSet, report
 
