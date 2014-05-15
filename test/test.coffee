@@ -48,7 +48,9 @@ describe 'Border Wait Reporter', ->
 
   it 'should find changed reports only', (done) ->
     patchLoad 'bwt2.xml'
-    reporter = new Reporter(200)
+    reporter = new Reporter
+      interval: 200
+      ignoreFirst: yes
     reporter.on 'reports', (reports) ->
       assert reports.length is 5, 'Should have detected 5 new reports'
       assert all(reports, (r) -> r.port is 'San Ysidro'), 'All new reports should have San Ysidro as it\'s port'
