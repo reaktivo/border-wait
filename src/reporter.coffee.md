@@ -35,17 +35,18 @@ setups it's interval for updates.
       constructor: (opts) ->
         @interval = opts.interval or 2 * 60 * 1000
         @ignoreFirst = opts.ignoreFirst or no
+        @eventName = 'report'
         @border = new BorderWait()
 
 We then overwrite EventEmitter's `@on` and `@off` methods and use them
 to start and stop the update interval.
 
       on: (type, listener) ->
-        @resume yes if type.match /^reports?$/
+        @resume yes if type is @eventName
         super type, listener
 
       off: (type, listener) ->
-        @pause() if @listenersAny().length is 0
+        @pause() if @listeners(@eventName).length is 0
         super type, listener
 
 `@update` is called whenever we need fresh new data from CBP,
@@ -58,7 +59,7 @@ extracting new reports and `emit`ing events with report data.
       handle: (reports) =>
         if @reports and @ignoreFirst
           newReports = @extractNew(reports, @reports)
-          each newReports, (report) => @emit 'report', report
+          each newReports, (report) => @emit @eventName, report
         @reports = reports
         do @resume if @timeoutId
 
