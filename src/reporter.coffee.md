@@ -19,7 +19,9 @@ We also extract useful functions from underscore.
 
     BorderWait = require './border-wait'
     EventEmitter = require('eventemitter2').EventEmitter2;
-    { first, last, each, findWhere, reject } = require 'underscore'
+    { first, last, each, findWhere, reject, pick } = require 'underscore'
+    queryKeys = ['port_id', 'lane', 'type', 'delay']
+
 
 Set the default interval for updates to two minutes
 
@@ -81,6 +83,7 @@ and returns only an array containing differences.
         if oldSet?.length is 0
           return newSet
         reject newSet, (report) ->
+          report = pick report, queryKeys
           findWhere oldSet, report
 
 Finally, we export the BorderWaitReporter class.
