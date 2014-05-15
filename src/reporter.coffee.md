@@ -59,7 +59,6 @@ extracting new reports and `emit`ing events with report data.
         if @reports and @ignoreFirst
           newReports = @extractNew(reports, @reports)
           each newReports, (report) => @emit 'report', report
-          @emit 'reports', newReports
         @reports = reports
         do @resume if @timeoutId
 
