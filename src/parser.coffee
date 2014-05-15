@@ -37,8 +37,9 @@ class BorderWaitParser
     extend {}, report, {updated_at, updated_str, delay}
 
   report: ($port) =>
-    id: $('port_number', $port).text()
+    port_id: $('port_number', $port).text()
     port: $('port_name', $port).text()
+    crossing: $('crossing_name', $port).text()
     status: $('port_status', $port).text().toLowerCase()
     updated_at: $('date', $port).text()
 
