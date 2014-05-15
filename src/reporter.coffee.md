@@ -57,7 +57,7 @@ extracting new reports and `emit`ing events with report data.
         @border.ports().then @handle
 
       handle: (reports) =>
-        if @reports and @ignoreFirst
+        if @reports or not @ignoreFirst
           newReports = @extractNew(reports, @reports)
           each newReports, (report) => @emit @eventName, report
         @reports = reports
