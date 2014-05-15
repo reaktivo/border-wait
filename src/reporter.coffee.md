@@ -78,7 +78,7 @@ but they are mostly used by the `on` and `off` methods.
 and returns only an array containing differences.
 
       extractNew: (newSet, oldSet) ->
-        if oldSet is undefined or oldSet.length is 0
+        if oldSet?.length is 0
           return newSet
         reject newSet, (report) ->
           findWhere oldSet, report
