@@ -46,13 +46,25 @@ describe 'Border Wait', ->
 
 describe 'Border Wait Reporter', ->
 
-  it 'should find changed reports only', (done) ->
+  it 'should find changed reports only, using ignoreFirst: true', (done) ->
     patchLoad 'bwt2.xml'
+    count = 0
+    times = 5
     reporter = new Reporter
       interval: 200
       ignoreFirst: yes
-    reporter.on 'reports', (reports) ->
-      assert reports.length is 5, 'Should have detected 5 new reports'
-      assert all(reports, (r) -> r.port is 'San Ysidro'), 'All new reports should have San Ysidro as it\'s port'
-      done()
+    reporter.many 'report', times, (report) ->
+      assert report.port is 'San Ysidro', 'All new reports should have San Ysidro as it\'s port'
+      done() if ++count is times
     patchLoad 'bwt.xml'
+
+  it 'should find all the reports, since we are setting ignoreFirst: false', (done) ->
+    patchLoad 'bwt.xml'
+    count = 0
+    times = 130
+    reporter = new Reporter
+      interval: 200
+      ignoreFirst: no
+    reporter.many 'report', times, (report) ->
+      done() if ++count is times
+
