@@ -1,6 +1,6 @@
 {
   "name": "border-wait",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "description": "Border Wait Time Scraper",
   "main": "index.js",
   "scripts": {
