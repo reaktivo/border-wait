@@ -37,10 +37,9 @@ class BorderWaitParser
     extend {}, report, {updated_at, updated_str, delay}
 
   report: ($port) =>
-    port_id: $('port_number', $port).text()
+    port_id: $('port_number', $port).text().replace('l', 1)
       # FIX STUPID CPB TYPO ON THEIR SIDE WHERE THEY
       # USED THE LETTER L WHERE IT SHOULD ONLY BE NUMBERS.
-      .replace('l', 1)
     port: $('port_name', $port).text()
     crossing: $('crossing_name', $port).text()
     status: $('port_status', $port).text().toLowerCase()
