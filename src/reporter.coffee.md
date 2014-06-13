@@ -69,7 +69,7 @@ extracting new reports and `emit`ing events with report data.
 but they are mostly used by the `on` and `off` methods.
 
       pause: =>
-        clearInterval @timeoutId
+        clearTimeout @timeoutId
         @timeoutId = null
 
       resume: (immediate) =>
