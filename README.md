@@ -12,7 +12,6 @@ Un módulo Nodejs para obtener el tiempo de espera de las garitas de Estados Uni
 La librería está escrita en estilo Literate Coffeescript, puedes leer el código fuente junto con comentarios en:
 
 - [BorderWait](https://github.com/reaktivo/border-wait/blob/master/src/border-wait.coffee.md)
-- [BorderWaitReporter](https://github.com/reaktivo/border-wait/blob/master/src/reporter.coffee.md)
 
 ## Para instalar:
 

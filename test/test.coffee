@@ -5,7 +5,6 @@ difflet = require('difflet')({indent: 2})
 { all } = require 'underscore'
 
 BorderWait = require '../lib/border-wait'
-Reporter = require '../lib/reporter'
 
 patchLoad = (xml) ->
   BorderWait.prototype._load = (done) ->
@@ -43,28 +42,3 @@ describe 'Border Wait', ->
         assert report.updated_at is updated_at, "Incorrect value for updated_at\nReturned #{report.updated_at}, expected #{updated_at}\n#{JSON.stringify(report)}"
         done()
       .fail (err) -> done(err)
-
-describe 'Border Wait Reporter', ->
-
-  it 'should find changed reports only, using ignoreFirst: true', (done) ->
-    patchLoad 'bwt2.xml'
-    count = 0
-    times = 5
-    reporter = new Reporter
-      interval: 200
-      ignoreFirst: yes
-    reporter.many 'report', times, (report) ->
-      assert report.port is 'San Ysidro', 'All new reports should have San Ysidro as it\'s port'
-      done() if ++count is times
-    patchLoad 'bwt.xml'
-
-  it 'should find all the reports, since we are setting ignoreFirst: false', (done) ->
-    patchLoad 'bwt.xml'
-    count = 0
-    times = 130
-    reporter = new Reporter
-      interval: 200
-      ignoreFirst: no
-    reporter.many 'report', times, (report) ->
-      done() if ++count is times
-
