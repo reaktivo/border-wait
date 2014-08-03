@@ -22,7 +22,6 @@ any way you like. Promises are based on [Q module](https://github.com/kriskowal/
       typeOrder: ['passenger', 'pedestrian', 'commercial']
       laneOrder: ['standard', 'readylane', 'sentri', 'fast']
 
-
       _load: (done) ->
         request endpoint, (err, res, html) -> done(err, html)
 
