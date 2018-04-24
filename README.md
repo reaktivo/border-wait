@@ -1,6 +1,8 @@
 border-wait
 ========
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/reaktivo/border-wait.svg)](https://greenkeeper.io/)
+
 [![Package Info](http://img.shields.io/badge/npm-border_wait-blue.svg)](https://npmjs.org/package/border-wait)
 [![NPM Version](http://img.shields.io/npm/v/border-wait.svg)](https://npmjs.org/package/border-wait)
 [![Build Status](http://img.shields.io/travis/reaktivo/border-wait/master.svg)](http://travis-ci.org/reaktivo/border-wait)
